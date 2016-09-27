@@ -1,6 +1,6 @@
 !gradle/wrapper/gradle-wrapper.jar
 .gradle/
-/classes/
+classes/
 build/
 
 ### STS ###
