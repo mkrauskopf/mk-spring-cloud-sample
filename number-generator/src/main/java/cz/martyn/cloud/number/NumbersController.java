@@ -12,14 +12,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-final class FibonacciController {
+final class NumbersController {
 
     @Autowired
     private FibonacciClient fibClient;
 
+    @Autowired
+    private PrimesClient primesClient;
+
     @RequestMapping("/nThFibonacci/{n}")
     public BigInteger nThFibonacci(@PathVariable BigInteger n) {
         return fibClient.sendMessage(n);
+    }
+
+    @RequestMapping("/nThPrime/{n}")
+    public BigInteger nThPrime(@PathVariable BigInteger n) {
+        return primesClient.sendMessage(n);
     }
 
 }
@@ -29,10 +37,23 @@ interface FibonacciClient {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            value = "/fibonacci/{n}",
+            value = "/fibonacci/{nTh}",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    BigInteger sendMessage(@PathVariable("n") BigInteger n);
+    BigInteger sendMessage(@PathVariable("nTh") BigInteger nTh);
+
+}
+
+@FeignClient("primes")
+interface PrimesClient {
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/prime/{nTh}",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    BigInteger sendMessage(@PathVariable("nTh") BigInteger nTh);
 
 }
