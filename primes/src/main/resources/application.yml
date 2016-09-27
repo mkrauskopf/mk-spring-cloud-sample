@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: primes
+
+server:
+  port: 8083
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:18765/eureka/
+
