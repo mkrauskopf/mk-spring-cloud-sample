@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +33,7 @@ final class NumbersController {
 
 }
 
-@FeignClient("fibonacci")
+@FeignClient(value = "fibonacci", fallback = FibonacciClientFallback.class)
 interface FibonacciClient {
 
     @RequestMapping(
@@ -42,6 +43,17 @@ interface FibonacciClient {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     BigInteger sendMessage(@PathVariable("nTh") BigInteger nTh);
+
+}
+
+@Component
+class FibonacciClientFallback implements FibonacciClient {
+
+    @Override
+    public BigInteger sendMessage(@PathVariable("nTh") BigInteger nTh) {
+        // This is indeed, very clever fallback value ;) But OK for presentation purpose.
+        return BigInteger.valueOf(42);
+    }
 
 }
 
