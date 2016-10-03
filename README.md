@@ -9,5 +9,6 @@ Used technologies:
 * Eureka for Service Discovery
 * Zuul for Routing
 * Feign for Declarative REST Client
+* Hystrix as a Circuit Breaker
 
 ![Architecture](docs/architecture.png?raw=true "Architecture")
