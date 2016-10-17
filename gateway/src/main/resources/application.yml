@@ -1,0 +1,8 @@
+# Expose Eureka via 'registry' context
+zuul:
+  routes:
+    registry:
+      url: http://localhost:18765
+
+server:
+  port: 8080
