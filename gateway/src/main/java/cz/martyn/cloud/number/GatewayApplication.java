@@ -6,6 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 
+import cz.martyn.cloud.number.filter.WhiteList;
 import cz.martyn.cloud.number.filter.WhiteListFilter;
 
 @EnableZuulProxy
@@ -13,13 +14,23 @@ import cz.martyn.cloud.number.filter.WhiteListFilter;
 @SpringBootApplication
 public class GatewayApplication {
 
-    public static void main(String[] args) {
+    private WhiteList whiteList;
+
+    public static void main(final String[] args) {
         SpringApplication.run(GatewayApplication.class, args);
     }
 
     @Bean
     public WhiteListFilter simpleFilter() {
-        return new WhiteListFilter();
+        return new WhiteListFilter(whiteList());
+    }
+
+    @Bean
+    public WhiteList whiteList() {
+        if (whiteList == null) {
+            whiteList = new WhiteList();
+        }
+        return whiteList;
     }
 
 }
