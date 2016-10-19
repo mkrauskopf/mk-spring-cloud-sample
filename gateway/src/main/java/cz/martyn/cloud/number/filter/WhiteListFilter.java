@@ -13,8 +13,10 @@ import com.netflix.zuul.context.RequestContext;
  * Created by mkalinovits on 10/18/16.
  */
 public class WhiteListFilter extends ZuulFilter {
+
     private static final String REGISTRY_EUREKA_APPS = "/registry/eureka/apps/";
-    private static final Logger log = LoggerFactory.getLogger(WhiteListFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WhiteListFilter.class);
+
     private final WhiteList whitelist;
 
     @Autowired
@@ -43,9 +45,8 @@ public class WhiteListFilter extends ZuulFilter {
         final String uri = ctx.getRequest().getRequestURI();
         if (doAimRegistry(uri) && !isOnWhitelist(uri)) {
             ctx.setSendZuulResponse(false);
-            log.info("Request from " + uri + " is blocked.");
+            LOG.info("Request from " + uri + " is blocked.");
         }
-
         return null;
     }
 
@@ -56,8 +57,9 @@ public class WhiteListFilter extends ZuulFilter {
     private boolean isOnWhitelist(final String uri) {
         boolean result = false;
         if (uri.split(REGISTRY_EUREKA_APPS).length > 1) {
-            final String s = uri.split(REGISTRY_EUREKA_APPS)[1];
-            result = whitelist.contains(s.split("/")[0]);
+            String toBeRegistered = uri.split(REGISTRY_EUREKA_APPS)[1];
+            String serviceName = toBeRegistered.split("/")[0];
+            result = whitelist.contains(serviceName);
         }
         return result;
     }
