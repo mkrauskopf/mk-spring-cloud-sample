@@ -20,8 +20,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 public class RoutesManagerController {
 
-    public static final String REGISTRY_EUREKA_APPS = "/registry/eureka/apps/";
-    public static final String SEPARATOR = "/";
+    private static final String REGISTRY_EUREKA_APPS = "/registry/eureka/apps/";
+    private static final String SEPARATOR = "/";
     @Autowired
     private RouteLocator locator;
     @Autowired
@@ -41,4 +41,38 @@ public class RoutesManagerController {
     public void removeFromWhitelist(@RequestParam("appId") final String appId) {
         whiteList.remove(appId);
     }
+
+    /**
+     * Just for Proof-of-concept purposes.
+     *
+     * @param appId - Application ID in discovery service
+     * @param instanceName - instance name in discovery service
+     */
+    @RequestMapping(value = "/removeApp", method = RequestMethod.DELETE)
+    public void removeApplication(@RequestParam("appId") final String appId, @RequestParam("instance") final String instanceName) {
+        removeFromWhitelist(appId);
+        removingApplicationInstanceFromEureka(appId, instanceName);
+    }
+
+    private void removingApplicationInstanceFromEureka(final String appId, final String instanceName) {
+        String url = getUrl();
+        RestOperations restOperations = new RestTemplate();
+        restOperations.delete(url + REGISTRY_EUREKA_APPS + appId + SEPARATOR + instanceName);
+    }
+
+    private String getUrl() {
+        HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
+        StringBuilder s = new StringBuilder();
+        s.
+                append(request.getScheme()).
+                append("://").
+                append(request.getServerName());
+        if (request.getServerPort() != 80) {
+            s.
+                    append(":").
+                    append(request.getServerPort());
+        }
+        return s.toString();
+    }
+
 }
