@@ -57,7 +57,9 @@ public class WhiteListFilter extends ZuulFilter {
     }
 
     private boolean doAimRegistry(final RequestContext ctx, final String uri) {
-        return uri.contains(REGISTRY_EUREKA_APPS) && (RequestMethod.POST.toString().equals(ctx.getRequest().getMethod()) || RequestMethod.PUT.toString().equals(ctx.getRequest().getMethod()));
+        return uri.contains(REGISTRY_EUREKA_APPS)
+                && (RequestMethod.POST.toString().equals(ctx.getRequest().getMethod())
+                    || RequestMethod.PUT.toString().equals(ctx.getRequest().getMethod()));
     }
 
     private boolean isOnWhitelist(final String uri) {

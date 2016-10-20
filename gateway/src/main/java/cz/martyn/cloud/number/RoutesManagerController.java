@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
-import com.netflix.zuul.context.RequestContext;
-
 import cz.martyn.cloud.number.filter.WhiteList;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
@@ -28,7 +27,8 @@ public class RoutesManagerController {
     private WhiteList whiteList;
 
     @RequestMapping(value = "/addRoute", method = GET)
-    public void addRoute(@RequestParam("name") final String routeName, @RequestParam("targetUrl") final String targetUrl) {
+    public void addRoute(@RequestParam("name") final String routeName,
+                         @RequestParam("targetUrl") final String targetUrl) {
         ((DiscoveryClientRouteLocator) locator).addRoute("/" + routeName + "/**", targetUrl);
     }
 
@@ -43,18 +43,24 @@ public class RoutesManagerController {
     }
 
     /**
-     * Just for Proof-of-concept purposes.
+     * Just for proof-of-concept purposes.
+     * <p>
+     * Deregisters application from Application Registry and removes it from whitelist.
+     * </p>
      *
      * @param appId - Application ID in discovery service
      * @param instanceName - instance name in discovery service
      */
     @RequestMapping(value = "/removeApp", method = RequestMethod.DELETE)
-    public void removeApplication(@RequestParam("appId") final String appId, @RequestParam("instance") final String instanceName, final HttpServletRequest request) {
+    public void removeApplication(@RequestParam("appId") final String appId,
+                                  @RequestParam("instance") final String instanceName,
+                                  final HttpServletRequest request) {
         removeFromWhitelist(appId);
         removingApplicationInstanceFromEureka(appId, instanceName, request);
     }
 
-    private void removingApplicationInstanceFromEureka(final String appId, final String instanceName, final HttpServletRequest request) {
+    private void removingApplicationInstanceFromEureka(
+            final String appId, final String instanceName, final HttpServletRequest request) {
         String url = getUrl(request);
         RestOperations restOperations = new RestTemplate();
         restOperations.delete(url + REGISTRY_EUREKA_APPS + appId + SEPARATOR + instanceName);
