@@ -1,0 +1,25 @@
+body {
+    padding-top: 54px;
+}
+
+.btn-floating {
+    position: fixed;
+    right: 4em;
+    bottom: 4em;
+
+    height: 2em;
+    width: 2em;
+    border-radius: 2em;
+
+    font-size: 1.5em;
+    line-height: 2em;
+    text-align: center;
+}
+
+.btn-floating > a {
+    color: white;
+    font-weight: bold;
+}
+.btn-floating > a:hover {
+    text-decoration: none;
+}

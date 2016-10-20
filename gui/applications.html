@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Application Registry</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+
+<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+    <a class="navbar-brand" href="#">Admin</a>
+    <ul class="nav nav-pills float-xs-right">
+        <li class="nav-item active">
+            <a class="nav-link btn btn-secondary" href="#">My User</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+
+    <div class="col-sm-12">
+        <h1 class="text-sm-center">Applications</h1>
+    </div>
+
+    <div class="hidden-md-down col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="nav-item">
+                <a class="nav-link active" href="applications.html">Applications</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Logs</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-sm-12 col-md-10">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-inverse">
+                <tr>
+                    <th>#</th>
+                    <th>name</th>
+                    <th>location</th>
+                    <th>status</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Gateway Zuul</td>
+                    <td>nb-mkalinovits.bpo.cxn:gateway-zuul:8080</td>
+                    <td>UP</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Primes</td>
+                    <td>nb-mkalinovits.bpo.cxn:primes:8081</td>
+                    <td>UP</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Fibonacci</td>
+                    <td>nb-mkalinovits.bpo.cxn:fibonacci:8083</td>
+                    <td>DOWN</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="btn-success btn-floating" style="position: fixed">
+            <a href="add.html">+</a>
+        </div>
+
+    </div>
+
+</div><!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/tether.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+
+</body>
+</html>

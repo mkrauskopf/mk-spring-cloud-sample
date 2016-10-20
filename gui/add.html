@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Application Registry | Add</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+
+<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+    <a class="navbar-brand" href="#">Admin</a>
+    <ul class="nav navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="#">Applications <span class="sr-only">(current)</span></a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+
+    <div class="col-sm-12">
+        <h1 class="text-sm-center">Add new application</h1>
+    </div>
+
+    <div class="hidden-md-down col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="nav-item">
+                <a class="nav-link active" href="applications.html">Applications</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Logs</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-12 col-md-10">
+
+        <form>
+            <fieldset>
+                <legend>Mandatory data</legend>
+                <div class="row">
+                    <label for="name" class="col-sm-5 col-lg-3">Name</label>
+                    <input id="name" class="col-sm-7" name="name" type="text"/>
+                </div>
+                <div class="row">
+                    <label for="location" class="col-sm-5 col-lg-3">Location</label>
+                    <input id="location" class="col-sm-7" name="location" type="text"/>
+                </div>
+                <div class="row">
+                    <label for="certificate" class="col-sm-5 col-lg-3">Certificate (public key)</label>
+                    <textarea id="certificate" class="col-sm-7" name="certificate"></textarea></div>
+            </fieldset>
+            <fieldset>S
+                <legend>Additional information</legend>
+                <div class="row">
+                    <label for="notes" class="col-sm-5 col-lg-3">Notes</label>
+                    <textarea id="notes" class="col-sm-7" name="notes"></textarea>
+                </div>
+            </fieldset>
+            <button class="btn btn-primary" type="submit">Register</button>
+            <a class="btn btn-link" href="applications.html">Cancel</a>
+        </form>
+
+    </div>
+
+</div><!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/tether.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+
+</body>
+</html>
