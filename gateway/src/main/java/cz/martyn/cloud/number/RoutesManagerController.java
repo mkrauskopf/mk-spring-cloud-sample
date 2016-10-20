@@ -49,19 +49,18 @@ public class RoutesManagerController {
      * @param instanceName - instance name in discovery service
      */
     @RequestMapping(value = "/removeApp", method = RequestMethod.DELETE)
-    public void removeApplication(@RequestParam("appId") final String appId, @RequestParam("instance") final String instanceName) {
+    public void removeApplication(@RequestParam("appId") final String appId, @RequestParam("instance") final String instanceName, final HttpServletRequest request) {
         removeFromWhitelist(appId);
-        removingApplicationInstanceFromEureka(appId, instanceName);
+        removingApplicationInstanceFromEureka(appId, instanceName, request);
     }
 
-    private void removingApplicationInstanceFromEureka(final String appId, final String instanceName) {
-        String url = getUrl();
+    private void removingApplicationInstanceFromEureka(final String appId, final String instanceName, final HttpServletRequest request) {
+        String url = getUrl(request);
         RestOperations restOperations = new RestTemplate();
         restOperations.delete(url + REGISTRY_EUREKA_APPS + appId + SEPARATOR + instanceName);
     }
 
-    private String getUrl() {
-        HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
+    private String getUrl(final HttpServletRequest request) {
         StringBuilder s = new StringBuilder();
         s.
                 append(request.getScheme()).
