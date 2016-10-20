@@ -15,3 +15,11 @@ eureka:
   client:
     serviceUrl:
        defaultZone: http://localhost:18765/eureka
+
+# Explicit list of services which can join the number cloud. Rather for demonstration purposes so far.
+whitelist:
+  servicesNames:
+    - delta # internal Eureka call
+    - number-generator
+    - primes
+    - fibonacci
