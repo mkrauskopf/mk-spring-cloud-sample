@@ -39,7 +39,7 @@ public class RoutesManagerController {
 
     @RequestMapping(value = "/removeFromWhitelist", method = RequestMethod.DELETE)
     public void removeFromWhitelist(@RequestParam("appId") final String appId) {
-        whiteList.remove(appId);
+        whiteList.remove(appId.toLowerCase());  // Standardizing input according to application names are lowercase strings by convention.
     }
 
     /**
