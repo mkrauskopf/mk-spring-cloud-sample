@@ -1,5 +1,7 @@
 package cz.martyn.cloud.number.filter;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +45,13 @@ public class WhiteListFilter extends ZuulFilter {
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        String uri = ctx.getRequest().getRequestURI();
+        HttpServletRequest req = ctx.getRequest();
+        String uri = req.getRequestURI();
         boolean doRegister = doAimRegistry(ctx, uri);
         boolean isOnWhitelist = isOnWhitelist(uri);
         if (doRegister && !isOnWhitelist) {
             ctx.setSendZuulResponse(false);
-            LOG.info("Request from " + uri + " is blocked.");
+            LOG.info("Request '{}' from {}:{} is blocked", uri, req.getRemoteHost(), req.getRemotePort());
         }
         return null;
     }
