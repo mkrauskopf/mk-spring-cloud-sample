@@ -23,3 +23,6 @@ whitelist:
     - number-generator
     - primes
     - fibonacci
+
+# Change to 'true' to enable requests and other types of possibly useful logging in the future.
+useLoggingFilter: false
