@@ -2,6 +2,8 @@ package cz.martyn.cloud.number;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.cloud.netflix.zuul.filters.discovery.DiscoveryClientRouteLocator;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
+import cz.martyn.cloud.number.filter.LoggingFilter;
 import cz.martyn.cloud.number.filter.WhiteList;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -19,10 +22,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 public class RoutesManagerController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(LoggingFilter.class);
+
     private static final String REGISTRY_EUREKA_APPS = "/registry/eureka/apps/";
     private static final String SEPARATOR = "/";
+
     @Autowired
     private RouteLocator locator;
+
     @Autowired
     private WhiteList whiteList;
 
@@ -33,13 +40,16 @@ public class RoutesManagerController {
     }
 
     @RequestMapping(value = "/addToWhitelist", method = GET)
-    public void addToWhitelist(@RequestParam("name") final String routeName) {
-        whiteList.add(routeName);
+    public void addToWhitelist(@RequestParam("appId") final String appId) {
+        whiteList.add(appId);
+        LOG.info("Application '{}' added to whitelist", appId);
     }
 
     @RequestMapping(value = "/removeFromWhitelist", method = RequestMethod.DELETE)
     public void removeFromWhitelist(@RequestParam("appId") final String appId) {
-        whiteList.remove(appId.toLowerCase());  // Standardizing input according to application names are lowercase strings by convention.
+        // Standardizing input according to application names are lowercase strings by convention.
+        whiteList.remove(appId.toLowerCase());
+        LOG.info("Application '{}' removed from whitelist", appId);
     }
 
     /**
