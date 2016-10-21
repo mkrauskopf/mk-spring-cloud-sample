@@ -17,7 +17,7 @@ public final class LoggingFilter extends ZuulFilter {
 
     @Override
     public String filterType() {
-        return "pre";
+        return "post";
     }
 
     @Override
@@ -34,8 +34,10 @@ public final class LoggingFilter extends ZuulFilter {
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest req = ctx.getRequest();
-        LOG.info("{} {} (remote: {}:{})",
-                req.getMethod(), req.getRequestURL(), req.getRemoteAddr(), req.getRemotePort());
+        LOG.info("{} {} (remote: {}:{})\n" +
+                        " - response status: {}",
+                req.getMethod(), req.getRequestURL(), req.getRemoteAddr(), req.getRemotePort(),
+                ctx.getResponseStatusCode());
         return null;
     }
 
