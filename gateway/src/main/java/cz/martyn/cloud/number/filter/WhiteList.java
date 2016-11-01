@@ -28,7 +28,8 @@ public class WhiteList {
     }
 
     public boolean contains(final String name) {
-        return servicesNames.contains(name.toLowerCase());
+        return servicesNames.contains(name.toLowerCase())
+                || name.equalsIgnoreCase("registry");
     }
 
 }

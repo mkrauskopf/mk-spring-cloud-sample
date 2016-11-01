@@ -11,7 +11,8 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 
 /**
- * Filter which let pass calls to application registry service only by services on whitelist.
+ * Filter which let pass requests via Zuul, including requests to application registry service, only to services on
+ * whitelist.
  */
 public class WhiteListFilter extends ZuulFilter {
 
@@ -49,6 +50,10 @@ public class WhiteListFilter extends ZuulFilter {
         String uri = req.getRequestURI();
         if (isCallToRegistryService(ctx, uri) && !canUseRegistryService(uri)) {
             ctx.setSendZuulResponse(false);
+            LOG.info("Request to application registry '{}' from {}:{} is blocked",
+                    uri, req.getRemoteHost(), req.getRemotePort());
+        } else if (!isCallToRegistryService(ctx, uri) && !isOnWhitelist(uri)) {
+            ctx.setSendZuulResponse(false);
             LOG.info("Request '{}' from {}:{} is blocked", uri, req.getRemoteHost(), req.getRemotePort());
         }
         return null;
@@ -70,6 +75,11 @@ public class WhiteListFilter extends ZuulFilter {
             result = whitelist.contains(appId);
         }
         return result;
+    }
+
+    private boolean isOnWhitelist(final String uri) {
+        String appId = uri.split("/")[1];
+        return whitelist.contains(appId);
     }
 
 }
